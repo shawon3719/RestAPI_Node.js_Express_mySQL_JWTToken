@@ -8,6 +8,7 @@ const {
 } = require("./user.service");
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+require("dotenv").config();
 module.exports = {
   //Create User
   createUser: (req, res) => {
