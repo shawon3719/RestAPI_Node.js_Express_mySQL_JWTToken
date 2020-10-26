@@ -10,7 +10,7 @@ This project is authored by [Masudul Hasan Shawon](https://github.com/shawon3719
 
 ```bash
 # clone the repo
-$ git clone https://github.com/shawon3719
+$ git clone https://github.com/shawon3719/RestAPI_Node.js_Express_mySQL_JWTToken.git
 
 # go into app's directory
 $ cd my-project
@@ -19,9 +19,7 @@ $ cd my-project
 $ npm install
 ```
 
-### Copy and Paste
-
-Copy all your files to your project folder and then,
+### Install NPM to get Node Modules
 
 ```bash
 # go into app's directory
@@ -40,7 +38,9 @@ $ npm start
 
 Navigate to [http://localhost:3000](http://localhost:3000). The app will automatically reload if you change any of the source files.
 
-## Creators
+Access the following API using localhost:3000/api/moduleName/Module.
+
+## Creator
 
 **Masudul Hasan Shawon**
 
