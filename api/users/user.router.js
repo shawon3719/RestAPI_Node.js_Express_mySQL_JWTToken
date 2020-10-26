@@ -8,9 +8,10 @@ const {
 } = require("./user.controller");
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token_validation");
+const { addUserValidation } = require("../../validation/users/user.validation");
 
-router.post("/create", checkToken, createUser);
 router.get("/all", checkToken, getUsers);
+router.post("/create", checkToken, addUserValidation, createUser);
 router.get("/user/:id", checkToken, getUserByUserId);
 router.patch("/update", checkToken, updateUser);
 router.delete("/delete", checkToken, deleteUser);
