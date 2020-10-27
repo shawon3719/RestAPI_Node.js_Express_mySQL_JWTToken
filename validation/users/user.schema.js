@@ -14,7 +14,7 @@ const schema = {
     number: joi
       .number()
       .integer()
-      .min(10000000000)
+      .min(00000000001)
       .message("Invalid Mobile Number")
       .max(99999999999)
       .required(),

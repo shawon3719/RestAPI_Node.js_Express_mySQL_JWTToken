@@ -15,6 +15,7 @@ module.exports = {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
+    body.profile = `uploads/images/${req.file.filename}`;
     create(body, (err, results) => {
       if (err) {
         console.log(err);
@@ -25,7 +26,8 @@ module.exports = {
       }
       return res.status(200).json({
         success: 1,
-        data: results,
+        message: "User created successfully",
+        profile_url: `http://localhost:3000/uploads/images/${req.file.filename}`
       });
     });
   },
