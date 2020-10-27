@@ -96,12 +96,12 @@ module.exports = {
         console.log(err);
         return;
       }
-      // if (!results) {
-      //   return res.json({
-      //     success: 0,
-      //     message: "User has been deleted successfully",
-      //   });
-      // }
+      if (!results) {
+        return res.json({
+          success: 0,
+          message: "User has been deleted",
+        });
+      }
       return res.json({
         success: 1,
         message: "User has been deleted successfully",
