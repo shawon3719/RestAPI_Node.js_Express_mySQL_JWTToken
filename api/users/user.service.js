@@ -27,7 +27,7 @@ module.exports = {
   //Get all Users
   getUsers: (callBack) => {
     pool.query(
-      `select id, firstName, lastName, gender, age, email, number from registration`,
+      `select id, firstName, lastName, gender, profile, age, email, number from registration`,
       [],
       (error, results, fields) => {
         if (error) {
