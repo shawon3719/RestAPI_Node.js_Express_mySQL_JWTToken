@@ -73,7 +73,7 @@ const {
         // if (!results) {
         //   return res.json({
         //     success: 0,
-        //     message: "Failed to update user",
+        //     message: "Failed to update slider",
         //   });
         // }
         return res.json({
@@ -98,7 +98,7 @@ const {
         }
         return res.json({
           success: 1,
-          message: "User has been deleted successfully",
+          message: "Slider has been deleted successfully",
         });
       });
     }
