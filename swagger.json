@@ -1,0 +1,752 @@
+{
+    "swagger": "2.0",
+    "info": 
+    {
+        "version": "4.1.4",
+        "title": "KYANC Website API",
+        "description": "Khwaja Yunus Ali Nursing College Website's API",
+        "license": 
+        {
+            "name": "Masudul Hasan Shawon",
+            "url": "https://github.com/shawon3719"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+    {
+    "name": "Users",
+    "description": "API for users in the system"
+    },
+    {
+      "name": "Sliders",
+      "description": "API for sliders in the system"
+      }
+    ],
+
+    "schemes": [
+        "http",
+        "https"
+      ],
+    "consumes": [
+    "application/json"
+    ],
+    "produces": [
+    "application/json"
+    ],
+
+
+    "paths": {
+      "/api/users/login": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Logs user into the system",
+          "description": "",
+          "operationId": "loginUser",
+          "produces": [
+            "application/xml",
+            "application/json"
+          ],
+          "parameters": [
+            {
+                "in": "body",
+                "name": "body",
+                "description": "You should pass here email",
+                "required": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "string"
+              },
+              "headers": {
+                "X-Rate-Limit": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "calls per hour allowed by the user"
+                },
+                "X-Expires-After": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "date in UTC when token expires"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid username/password supplied"
+            }
+          }
+        }
+      },
+      "/api/users/all": {
+            "get": {
+            "tags": [
+                "Users"
+            ],
+            "summary": "Get All Users info.",
+            "description": "All Users Information will display after a successfull operation.",
+            "operationId": "getUsers",
+            "produces": [
+                "application/json",
+                "application/xml"
+            ],
+            "responses": {
+                "200": {
+                "description": "Fetch all users data successfully",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                    "$ref": "#/definitions/users"
+                    }
+                }
+                },
+                "400": {
+                "description": "Invalid access token"
+                }
+            },
+            "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/users/create": {
+            "post": {
+              "tags": [
+                "Users"
+              ],
+              "summary": "Add a new user",
+              "description": "",
+              "operationId": "addUser",
+              "consumes": [
+                "application/json",
+                "application/xml"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Enter all the value",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "firstName": {
+                            "type": "string"
+                            },
+                            "lastName": {
+                            "type": "string"
+                            },
+                            "age": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "gender": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "number": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "profile": {
+                                "type": "file"
+                            }
+                        }
+                    }
+                }
+              ],
+              "responses": {
+                "405": {
+                  "description": "Invalid input"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/users/user/{id}": {
+            "get": {
+              "tags": [
+                "Users"
+              ],
+              "summary": "Finds Users by User ID",
+              "description": "Get specific Users info by user ID",
+              "operationId": "findUserByUserID",
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of user to return",
+                  "required": true,
+                  "type": "integer",
+                  "format": "int64"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/users"
+                  }
+                },
+                "400": {
+                  "description": "Invalid ID supplied"
+                },
+                "404": {
+                  "description": "User not found"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/users/update": {
+            "patch": {
+              "tags": [
+                "Users"
+              ],
+              "summary": "Update User",
+              "description": "Update specific Users info by user ID",
+              "operationId": "updateUser",
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Enter all the value",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                            "type": "integer",
+                            "format": "int64"
+                            },
+                            "firstName": {
+                            "type": "string"
+                            },
+                            "lastName": {
+                            "type": "string"
+                            },
+                            "age": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "gender": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "number": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/users"
+                  }
+                },
+                "400": {
+                  "description": "Invalid ID supplied"
+                },
+                "404": {
+                  "description": "User not found"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/users/delete/{id}": {
+            "delete": {
+              "tags": [
+                "Users"
+              ],
+              "summary": "Update User",
+              "description": "Update specific Users info by user ID",
+              "operationId": "updateUser",
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of user to return",
+                  "required": true,
+                  "type": "integer",
+                  "format": "int64"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/users"
+                  }
+                },
+                "400": {
+                  "description": "Invalid ID supplied"
+                },
+                "404": {
+                  "description": "User not found"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+      "/api/sliders/all": {
+            "get": {
+            "tags": [
+                "Sliders"
+            ],
+            "summary": "Get All Users info.",
+            "description": "All Users Information will display after a successfull operation.",
+            "operationId": "getUsers",
+            "produces": [
+                "application/json",
+                "application/xml"
+            ],
+            "responses": {
+                "200": {
+                "description": "Fetch all users data successfully",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                    "$ref": "#/definitions/users"
+                    }
+                }
+                },
+                "400": {
+                "description": "Invalid access token"
+                }
+            },
+            "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/sliders/create": {
+            "post": {
+              "tags": [
+                "Sliders"
+              ],
+              "summary": "Add a new user",
+              "description": "",
+              "operationId": "addUser",
+              "consumes": [
+                "application/json",
+                "application/xml"
+              ],
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Enter all the value",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "firstName": {
+                            "type": "string"
+                            },
+                            "lastName": {
+                            "type": "string"
+                            },
+                            "age": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "gender": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "number": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "profile": {
+                                "type": "file"
+                            }
+                        }
+                    }
+                }
+              ],
+              "responses": {
+                "405": {
+                  "description": "Invalid input"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/sliders/slider/{id}": {
+            "get": {
+              "tags": [
+                "Sliders"
+              ],
+              "summary": "Finds Users by User ID",
+              "description": "Get specific Users info by user ID",
+              "operationId": "findUserByUserID",
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of user to return",
+                  "required": true,
+                  "type": "integer",
+                  "format": "int64"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/users"
+                  }
+                },
+                "400": {
+                  "description": "Invalid ID supplied"
+                },
+                "404": {
+                  "description": "User not found"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/sliders/update": {
+            "patch": {
+              "tags": [
+                "Sliders"
+              ],
+              "summary": "Update User",
+              "description": "Update specific Users info by user ID",
+              "operationId": "updateUser",
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Enter all the value",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                            "type": "integer",
+                            "format": "int64"
+                            },
+                            "firstName": {
+                            "type": "string"
+                            },
+                            "lastName": {
+                            "type": "string"
+                            },
+                            "age": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "gender": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "number": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/users"
+                  }
+                },
+                "400": {
+                  "description": "Invalid ID supplied"
+                },
+                "404": {
+                  "description": "User not found"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      },
+        "/api/sliders/delete/{id}": {
+            "delete": {
+              "tags": [
+                "Sliders"
+              ],
+              "summary": "Update User",
+              "description": "Update specific Users info by user ID",
+              "operationId": "updateUser",
+              "produces": [
+                "application/json",
+                "application/xml"
+              ],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of user to return",
+                  "required": true,
+                  "type": "integer",
+                  "format": "int64"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "successful operation",
+                  "schema": {
+                    "$ref": "#/definitions/users"
+                  }
+                },
+                "400": {
+                  "description": "Invalid ID supplied"
+                },
+                "404": {
+                  "description": "User not found"
+                }
+              },
+              "security":
+                [
+                    {
+                        "Bearer": [
+                            "write:users",
+                            "read:users"
+                        ]
+                    }
+                ]
+            }
+      }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "description": "Copy 'Bearer ' + valid JWT token (retrieved by using \"/api/users/login\" entrypoint) into the field",
+            "name": "Authorization",
+            "in": "header"
+}
+    },
+    "definitions": 
+    {
+        "users": 
+        {
+            "required": 
+            [
+                "firstName",
+                "lastName",
+                "email",
+                "age",
+                "gender",
+                "profile",
+                "password",
+                "number"
+            ],
+            "properties": 
+            {
+                "firstName": 
+                {
+                    "type": "string",
+                    "uniqueItems": false
+                },
+                "lastName": 
+                {
+                    "type": "string"
+                },
+                "email": 
+                {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "age": 
+                {
+                    "type": "integer"
+                },
+                "gender": 
+                {
+                    "type": "string"
+                },
+                "profile": 
+                {
+                    "type": "file"
+                },
+                "password": 
+                {
+                    "type": "string"
+                },
+                "number": 
+                {
+                    "type": "string"
+                }
+            }
+        },
+        "sliders":
+        {
+            "required": 
+            [
+                "title",
+                "description",
+                "image",
+                "priority",
+                "created_by"
+            ],
+            "properties": 
+            {
+                "title": 
+                {
+                    "type": "string",
+                    "uniqueItems": false
+                },
+                "description": 
+                {
+                    "type": "string"
+                },
+                "image": 
+                {
+                    "type": "file"
+                },
+                "priority": 
+                {
+                    "type": "integer"
+                },
+                "created_by": 
+                {
+                    "type": "string"
+                }
+            }
+        }
+    }
+  }

@@ -73,10 +73,10 @@ module.exports = {
     );
   },
   //Delete User By ID
-  deleteUser: (data, callBack) => {
+  deleteUser: (id, callBack) => {
     pool.query(
       `delete from registration where id = ?`,
-      [data.id],
+      [id],
       (error, results, fields) => {
         if (error) {
           callBack(error);

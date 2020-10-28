@@ -31,7 +31,7 @@ router.get("/all", checkToken, getUsers);
 router.post("/create",checkToken, upload.single('profile'), addUserValidation, createUser);
 router.get("/user/:id", checkToken, getUserByUserId);
 router.patch("/update", checkToken, updateUser);
-router.delete("/delete", checkToken, deleteUser);
+router.delete("/delete/:id", checkToken, deleteUser);
 router.post("/login", login);
 
 module.exports = router;
