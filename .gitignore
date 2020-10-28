@@ -1,5 +1,5 @@
 node_modules
 .env
-uploads/profile/
-uploads/sliders/
+uploads/profile/*
+uploads/sliders/*
 restapi.sql
