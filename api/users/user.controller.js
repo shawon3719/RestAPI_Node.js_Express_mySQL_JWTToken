@@ -15,7 +15,7 @@ module.exports = {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
-    body.profile = `uploads/images/${req.file.filename}`;
+    body.profile = `uploads/profile/${req.file.filename}`;
     create(body, (err, results) => {
       if (err) {
         console.log(err);
