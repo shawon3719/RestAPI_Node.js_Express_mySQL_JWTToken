@@ -298,6 +298,13 @@
                             }
                         }
                     }
+                },
+                {
+                  "name": "profile",
+                  "in": "formData",
+                  "description": "The uploaded file data",
+                  "required": true,
+                  "type": "file"
                 }
               ],
               "responses": {
@@ -330,9 +337,9 @@
               "tags": [
                 "Users"
               ],
-              "summary": "Update User",
-              "description": "Update specific Users info by user ID",
-              "operationId": "updateUser",
+              "summary": "Delete User",
+              "description": "Delete specific Users info by user ID",
+              "operationId": "deleteUser",
               "produces": [
                 "application/json",
                 "application/xml"
@@ -341,7 +348,7 @@
                 {
                   "name": "id",
                   "in": "path",
-                  "description": "ID of user to return",
+                  "description": "ID of user to delete",
                   "required": true,
                   "type": "integer",
                   "format": "int64"
@@ -372,25 +379,26 @@
                 ]
             }
       },
+
       "/api/sliders/all": {
             "get": {
             "tags": [
                 "Sliders"
             ],
-            "summary": "Get All Users info.",
-            "description": "All Users Information will display after a successfull operation.",
-            "operationId": "getUsers",
+            "summary": "Get All sliders info.",
+            "description": "All sliders Information will display after a successfull operation.",
+            "operationId": "getSliders",
             "produces": [
                 "application/json",
                 "application/xml"
             ],
             "responses": {
                 "200": {
-                "description": "Fetch all users data successfully",
+                "description": "Fetch all sliders data successfully",
                 "schema": {
                     "type": "array",
                     "items": {
-                    "$ref": "#/definitions/users"
+                    "$ref": "#/definitions/sliders"
                     }
                 }
                 },
@@ -402,8 +410,8 @@
                 [
                     {
                         "Bearer": [
-                            "write:users",
-                            "read:users"
+                            "write:sliders",
+                            "read:sliders"
                         ]
                     }
                 ]
@@ -414,9 +422,9 @@
               "tags": [
                 "Sliders"
               ],
-              "summary": "Add a new user",
+              "summary": "Add a new slider",
               "description": "",
-              "operationId": "addUser",
+              "operationId": "addSlider",
               "consumes": [
                 "application/json",
                 "application/xml"
@@ -434,34 +442,28 @@
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "firstName": {
+                            "title": {
                             "type": "string"
                             },
-                            "lastName": {
+                            "description": {
                             "type": "string"
                             },
-                            "age": {
+                            "created_by": {
                                 "type": "integer",
                                 "format": "int64"
                             },
-                            "gender": {
+                            "priority": {
                                 "type": "string"
-                            },
-                            "email": {
-                                "type": "string"
-                            },
-                            "password": {
-                                "type": "string"
-                            },
-                            "number": {
-                                "type": "integer",
-                                "format": "int64"
-                            },
-                            "profile": {
-                                "type": "file"
                             }
                         }
                     }
+                },
+                {
+                  "name": "image",
+                  "in": "req",
+                  "description": "The uploaded file data",
+                  "required": true,
+                  "type": "file"
                 }
               ],
               "responses": {
@@ -473,8 +475,8 @@
                 [
                     {
                         "Bearer": [
-                            "write:users",
-                            "read:users"
+                            "write:sliders",
+                            "read:sliders"
                         ]
                     }
                 ]
@@ -485,9 +487,9 @@
               "tags": [
                 "Sliders"
               ],
-              "summary": "Finds Users by User ID",
-              "description": "Get specific Users info by user ID",
-              "operationId": "findUserByUserID",
+              "summary": "Finds sliders by slider ID",
+              "description": "Get specific sliders info by slider ID",
+              "operationId": "findUserBySliderID",
               "produces": [
                 "application/json",
                 "application/xml"
@@ -496,7 +498,7 @@
                 {
                   "name": "id",
                   "in": "path",
-                  "description": "ID of user to return",
+                  "description": "ID of slider to return",
                   "required": true,
                   "type": "integer",
                   "format": "int64"
@@ -506,22 +508,22 @@
                 "200": {
                   "description": "successful operation",
                   "schema": {
-                    "$ref": "#/definitions/users"
+                    "$ref": "#/definitions/sliders"
                   }
                 },
                 "400": {
                   "description": "Invalid ID supplied"
                 },
                 "404": {
-                  "description": "User not found"
+                  "description": "slider not found"
                 }
               },
               "security":
                 [
                     {
                         "Bearer": [
-                            "write:users",
-                            "read:users"
+                            "write:sliders",
+                            "read:sliders"
                         ]
                     }
                 ]
@@ -532,9 +534,9 @@
               "tags": [
                 "Sliders"
               ],
-              "summary": "Update User",
-              "description": "Update specific Users info by user ID",
-              "operationId": "updateUser",
+              "summary": "Update Slider",
+              "description": "Update specific Sliders info by slider ID",
+              "operationId": "updateSlider",
               "produces": [
                 "application/json",
                 "application/xml"
@@ -552,38 +554,35 @@
                             "type": "integer",
                             "format": "int64"
                             },
-                            "firstName": {
-                            "type": "string"
-                            },
-                            "lastName": {
-                            "type": "string"
-                            },
-                            "age": {
-                                "type": "integer",
-                                "format": "int64"
-                            },
-                            "gender": {
+                            "title": {
+                              "type": "string"
+                              },
+                              "description": {
+                              "type": "string"
+                              },
+                              "created_by": {
                                 "type": "string"
-                            },
-                            "email": {
-                                "type": "string"
-                            },
-                            "password": {
-                                "type": "string"
-                            },
-                            "number": {
-                                "type": "integer",
-                                "format": "int64"
-                            }
+                              },
+                              "priority": {
+                                  "type": "integer",
+                                  "format": "int64"
+                              }
                         }
                     }
+                },
+                {
+                  "name": "image",
+                  "in": "req",
+                  "description": "The uploaded file data",
+                  "required": true,
+                  "type": "file"
                 }
               ],
               "responses": {
                 "200": {
                   "description": "successful operation",
                   "schema": {
-                    "$ref": "#/definitions/users"
+                    "$ref": "#/definitions/sliders"
                   }
                 },
                 "400": {
@@ -609,9 +608,9 @@
               "tags": [
                 "Sliders"
               ],
-              "summary": "Update User",
-              "description": "Update specific Users info by user ID",
-              "operationId": "updateUser",
+              "summary": "Delete Slider",
+              "description": "Delete specific Sliders info by ussliderer ID",
+              "operationId": "deleteSlider",
               "produces": [
                 "application/json",
                 "application/xml"
@@ -620,7 +619,7 @@
                 {
                   "name": "id",
                   "in": "path",
-                  "description": "ID of user to return",
+                  "description": "ID of slider to delete",
                   "required": true,
                   "type": "integer",
                   "format": "int64"
@@ -630,22 +629,22 @@
                 "200": {
                   "description": "successful operation",
                   "schema": {
-                    "$ref": "#/definitions/users"
+                    "$ref": "#/definitions/sliders"
                   }
                 },
                 "400": {
                   "description": "Invalid ID supplied"
                 },
                 "404": {
-                  "description": "User not found"
+                  "description": "Slider not found"
                 }
               },
               "security":
                 [
                     {
                         "Bearer": [
-                            "write:users",
-                            "read:users"
+                            "write:sliders",
+                            "read:sliders"
                         ]
                     }
                 ]
